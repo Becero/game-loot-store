@@ -1,44 +1,41 @@
-# Estudos de Angular | LootForge
+# LootForge
 
-Este projeto foi desenvolvido como um estudo prático em Angular, usando como tema uma loja gamer para venda de itens digitais, contas, boosts e conteúdos relacionados a jogos.
+Projeto de estudo em Angular com apresentacao de portifolio, usando como tema uma loja gamer para venda de itens digitais, boosts, contas e moedas para jogos.
 
-A proposta foi unir prática de frontend com uma interface inspirada em um cenário real de vendas, trabalhando tanto a parte visual quanto regras de acesso, organização de conteúdo e renderização dinâmica.
+O foco foi praticar construcao de interface, organizacao visual, renderizacao dinamica e regras basicas de acesso, mas em um contexto com cara de produto real.
 
-## Objetivo do Projeto
+## Sobre o Projeto
 
-Este projeto serve como base de estudo para:
+O LootForge foi pensado como um estudo pratico de frontend:
 
-- construção de interfaces em Angular
-- uso de templates dinâmicos com `@if` e `@for`
-- manipulação de formulários com `ngModel`
-- controle de sessão no frontend com `localStorage`
-- organização visual com SCSS
-- criação de uma home com proposta comercial
+- interface inspirada em uma home comercial
+- experiencia visual voltada para games
+- fluxo de acesso com perfil de usuario e administrador
+- exibicao de produtos, relatorios e conteudo dinamico
 
-## Visão Geral da Aplicação
+Mesmo sendo um projeto de estudo, a proposta foi montar algo apresentavel, com estrutura visual de portifolio e com funcionalidades que simulam um caso de uso real.
 
-O site simula uma loja gamer com foco em venda de:
+## Destaques
 
-- gold
-- boosts
-- contas
-- moedas digitais
-- ofertas para jogos como World of Warcraft, Diablo IV, League of Legends e Counter-Strike 2
+- Home responsiva com layout moderno e foco visual em conversao
+- Cards de produtos com imagens reais
+- Modal inicial com jogos em alta
+- Secao de videos com embeds do YouTube
+- Cadastro e login com persistencia local
+- Contas de teste para usuario e administrador
+- Relatorios de vendas, procura e cadastro
+- Controle de acesso para recursos administrativos
 
-Além da vitrine de vendas, o projeto também foi usado para praticar funcionalidades comuns em aplicações web.
+## Objetivos de Estudo
 
-## O Que Foi Implementado
+Este projeto foi usado para praticar:
 
-Atualmente, o projeto possui:
-
-- home com layout moderno, simples e responsivo
-- vitrine de produtos com imagens reais
-- modal inicial com jogos em destaque
-- seção com vídeos de MMOs
-- sistema de cadastro e login para testes
-- contas de teste para administrador e usuário
-- relatórios de vendas, procura e cadastro
-- bloqueio de relatórios apenas para administrador
+- Angular 20 com componentes standalone
+- Templates com `@if` e `@for`
+- Formularios com `ngModel`
+- Gerenciamento simples de sessao com `localStorage`
+- Estruturacao de interface com SCSS
+- Separacao entre areas publicas e area administrativa
 
 ## Tecnologias Utilizadas
 
@@ -47,9 +44,42 @@ Atualmente, o projeto possui:
 - SCSS
 - HTML
 
-## Como Executar o Projeto
+## Funcionalidades
 
-Instale as dependências:
+### Area publica
+
+- Vitrine de produtos com nome, preco, entrega e imagem
+- Secoes de categorias, videos e destaques
+- Modal com jogos mais jogados do momento
+
+### Acesso e perfil
+
+- Cadastro de novas contas
+- Login com validacao basica
+- Persistencia de contas e sessao no navegador
+- Logout com ocultacao de areas restritas
+
+### Area administrativa
+
+- Visualizacao de relatorios de vendas
+- Visualizacao de relatorios de procura
+- Visualizacao de metricas de cadastro
+
+## Contas de Teste
+
+Administrador:
+
+- E-mail: `admin@lootforge.test`
+- Senha: `Admin@123`
+
+Usuario:
+
+- E-mail: `usuario@lootforge.test`
+- Senha: `User@123`
+
+## Como Executar
+
+Instale as dependencias:
 
 ```bash
 npm install
@@ -61,7 +91,7 @@ Inicie o servidor local:
 ng serve
 ```
 
-Depois acesse:
+Abra no navegador:
 
 ```bash
 http://localhost:4200/
@@ -69,13 +99,13 @@ http://localhost:4200/
 
 ## Build
 
-Para gerar a versão de produção:
+Para gerar a versao de producao:
 
 ```bash
 ng build
 ```
 
-O resultado será gerado em:
+Saida:
 
 ```bash
 dist/game-loot-store
@@ -83,48 +113,32 @@ dist/game-loot-store
 
 ## Testes
 
-Para rodar os testes:
+Para executar os testes:
 
 ```bash
 ng test
 ```
 
-## Contas de Teste
-
-Administrador:
-
-- E-mail: `admin@lootforge.test`
-- Senha: `Admin@123`
-
-Usuário:
-
-- E-mail: `usuario@lootforge.test`
-- Senha: `User@123`
-
-## Regras de Acesso
-
-- usuários comuns podem navegar pela loja e usar o sistema de acesso
-- relatórios e métricas administrativas aparecem apenas para administrador
-- ao sair da conta, áreas restritas deixam de ser exibidas
-
-## Observação Importante
-
-O sistema de login atual foi criado para fins de estudo e demonstração no frontend.
-
-Isso significa que:
-
-- os dados ficam salvos localmente no navegador
-- não existe backend real de autenticação
-- não é um sistema pronto para produção
-
 ## Estrutura Principal
 
-- `src/app/app.ts`: lógica principal da aplicação
+- `src/app/app.ts`: logica principal da aplicacao
 - `src/app/app.html`: estrutura da interface
-- `src/app/app.scss`: estilos da página
-- `public/products/`: imagens dos produtos
+- `src/app/app.scss`: estilos da pagina
+- `public/products/`: imagens usadas nos cards de produtos
 
-## Repositório
+## Contexto de Estudo
+
+Este projeto nao usa backend real para autenticacao.
+
+Atualmente:
+
+- os dados de conta ficam no `localStorage`
+- a sessao e controlada no frontend
+- os relatorios usam dados simulados combinados com dados locais
+
+Ou seja: ele foi construido para estudo, demonstracao e portifolio, nao como sistema pronto para producao.
+
+## Repositorio
 
 GitHub:
 
