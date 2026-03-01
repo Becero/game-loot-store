@@ -1,0 +1,18 @@
+<svg width="640" height="360" viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="360" rx="24" fill="#0F172A"/>
+  <rect width="640" height="360" rx="24" fill="url(#paint0_linear)"/>
+  <circle cx="501" cy="106" r="88" fill="#F59E0B" fill-opacity="0.24"/>
+  <circle cx="142" cy="296" r="118" fill="#60A5FA" fill-opacity="0.18"/>
+  <path d="M92 238C154 194 238 166 344 154C420 146 491 115 548 80V284H92V238Z" fill="#111827" fill-opacity="0.58"/>
+  <text x="46" y="84" fill="white" font-family="Arial, sans-serif" font-size="22" font-weight="700">WORLD OF WARCRAFT</text>
+  <text x="46" y="126" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="42" font-weight="700">Retail Gold</text>
+  <text x="46" y="164" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="20">Pacotes rapidos para boost e raid</text>
+  <rect x="46" y="222" width="178" height="52" rx="16" fill="#F59E0B"/>
+  <text x="78" y="255" fill="#111827" font-family="Arial, sans-serif" font-size="22" font-weight="700">Entrega 15 min</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="56" y1="42" x2="596" y2="312" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1D4ED8"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+</svg>

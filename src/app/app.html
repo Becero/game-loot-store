@@ -1,0 +1,545 @@
+<div class="shell">
+  @if (isTrendingModalOpen) {
+    <div class="modal-backdrop" (click)="closeTrendingModal()">
+      <section
+        class="trending-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="trending-modal-title"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="trending-modal-head">
+          <div>
+            <span class="section-kicker">Em alta agora</span>
+            <h2 id="trending-modal-title">3 jogos mais jogados do momento</h2>
+            <p>Baseado no ranking em tempo real da Steam.</p>
+          </div>
+
+          <button class="modal-close" type="button" (click)="closeTrendingModal()" aria-label="Fechar modal">
+            Fechar
+          </button>
+        </div>
+
+        <div class="trending-grid">
+          @for (game of trendingGames; track game.title) {
+            <article class="trending-card">
+              <img [src]="game.imageUrl" [alt]="game.title" loading="lazy">
+              <div class="trending-copy">
+                <span class="report-label">{{ game.platform }}</span>
+                <h3>{{ game.title }}</h3>
+                <div class="trending-stats">
+                  <div>
+                    <strong>{{ game.currentPlayers }}</strong>
+                    <span>Jogando agora</span>
+                  </div>
+                  <div>
+                    <strong>{{ game.peakToday }}</strong>
+                    <span>Pico hoje</span>
+                  </div>
+                </div>
+                <a [href]="game.storeUrl" target="_blank" rel="noopener">Abrir na Steam</a>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    </div>
+  }
+
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Ir para o topo">
+      <span class="brand-mark">LF</span>
+      <div>
+        <p class="brand-name">LootForge</p>
+        <span class="brand-tag">Marketplace para gamers</span>
+      </div>
+    </a>
+
+    <nav class="nav">
+      <a href="#categorias">Categorias</a>
+      <a href="#ofertas">Ofertas</a>
+      @if (canViewReports) {
+        <a href="#relatorios">Relatorios</a>
+      }
+      <a href="#videos">Videos</a>
+      <a href="#seguranca">Seguranca</a>
+      <a href="#acesso">Acesso</a>
+    </nav>
+
+    @if (currentUser) {
+      <div class="header-session">
+        <button class="secondary-btn modal-trigger" type="button" (click)="openTrendingModal()">
+          Jogos em alta
+        </button>
+        <div class="session-chip">
+          <span class="session-name">{{ currentUser.name }}</span>
+          <span class="session-role">{{ currentRoleLabel }}</span>
+        </div>
+        <button class="nav-cta nav-ghost" type="button" (click)="logout()">Sair</button>
+      </div>
+    } @else {
+      <div class="header-actions">
+        <button class="secondary-btn modal-trigger" type="button" (click)="openTrendingModal()">
+          Jogos em alta
+        </button>
+        <a class="nav-cta" href="#acesso">Entrar</a>
+      </div>
+    }
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <span class="eyebrow">Itens, gold, boosts e contas com entrega rapida</span>
+        <h1>Monte sua loja de itens para WoW, MMORPGs e jogos competitivos.</h1>
+        <p class="hero-text">
+          Uma vitrine feita para vender gold, carries, skins e moedas digitais com visual simples,
+          organizada e pronta para fluxo de compra e acesso de usuarios.
+        </p>
+
+        <div class="hero-actions">
+          <a class="primary-btn" href="#ofertas">Ver ofertas em destaque</a>
+          <a class="secondary-btn" href="#acesso">Cadastrar ou entrar</a>
+        </div>
+
+        <div class="hero-stats" aria-label="Indicadores da plataforma">
+          <article>
+            <strong>18k+</strong>
+            <span>Pedidos concluidos</span>
+          </article>
+          <article>
+            <strong>4,9/5</strong>
+            <span>Avaliacao media</span>
+          </article>
+          <article>
+            <strong>24/7</strong>
+            <span>Equipe online</span>
+          </article>
+        </div>
+      </div>
+
+      <aside class="hero-panel auth-panel" id="acesso" aria-label="Painel de acesso">
+        @if (currentUser) {
+          <div class="auth-state">
+            <span class="panel-badge">Sessao ativa</span>
+            <h2>Ola, {{ currentUser.name }}.</h2>
+            <p>
+              Voce entrou como <strong>{{ currentRoleLabel }}</strong> e sua conta esta pronta para usar.
+            </p>
+
+            <div class="account-summary">
+              <div>
+                <span class="signal-title">E-mail</span>
+                <strong>{{ currentUser.email }}</strong>
+              </div>
+              <div>
+                <span class="signal-title">Perfil</span>
+                <strong>{{ currentRoleLabel }}</strong>
+              </div>
+              <div>
+                <span class="signal-title">Status</span>
+                <strong>Autenticado</strong>
+              </div>
+            </div>
+
+            <div class="account-actions">
+              <button class="primary-btn" type="button" (click)="logout()">Encerrar sessao</button>
+              <button class="secondary-btn" type="button" (click)="setAuthMode('login')">Trocar conta</button>
+            </div>
+          </div>
+        } @else {
+          <div class="auth-shell">
+            <div class="auth-header">
+              <span class="panel-badge">Acesso seguro</span>
+              <h2>Cadastro e login</h2>
+              <p>
+                Sistema funcional em Angular com validacao, persistencia local e contas prontas para teste.
+              </p>
+            </div>
+
+            <div class="auth-toggle" role="tablist" aria-label="Alternar entre login e cadastro">
+              <button
+                type="button"
+                [class.active]="authMode === 'login'"
+                (click)="setAuthMode('login')"
+              >
+                Entrar
+              </button>
+              <button
+                type="button"
+                [class.active]="authMode === 'register'"
+                (click)="setAuthMode('register')"
+              >
+                Cadastrar
+              </button>
+            </div>
+
+            @if (authMode === 'login') {
+              <form class="auth-form" (ngSubmit)="login()">
+                <label>
+                  <span>E-mail</span>
+                  <input
+                    type="email"
+                    name="loginEmail"
+                    [(ngModel)]="loginForm.email"
+                    placeholder="voce@exemplo.com"
+                  >
+                </label>
+
+                <label>
+                  <span>Senha</span>
+                  <input
+                    type="password"
+                    name="loginPassword"
+                    [(ngModel)]="loginForm.password"
+                    placeholder="Sua senha"
+                  >
+                </label>
+
+                <button class="primary-btn" type="submit">Entrar na conta</button>
+              </form>
+            } @else {
+              <form class="auth-form" (ngSubmit)="register()">
+                <label>
+                  <span>Nome</span>
+                  <input
+                    type="text"
+                    name="registerName"
+                    [(ngModel)]="registerForm.name"
+                    placeholder="Seu nome"
+                  >
+                </label>
+
+                <label>
+                  <span>E-mail</span>
+                  <input
+                    type="email"
+                    name="registerEmail"
+                    [(ngModel)]="registerForm.email"
+                    placeholder="voce@exemplo.com"
+                  >
+                </label>
+
+                <label>
+                  <span>Senha</span>
+                  <input
+                    type="password"
+                    name="registerPassword"
+                    [(ngModel)]="registerForm.password"
+                    placeholder="Minimo de 6 caracteres"
+                  >
+                </label>
+
+                <label>
+                  <span>Confirmar senha</span>
+                  <input
+                    type="password"
+                    name="registerConfirmPassword"
+                    [(ngModel)]="registerForm.confirmPassword"
+                    placeholder="Repita a senha"
+                  >
+                </label>
+
+                <button class="primary-btn" type="submit">Criar conta</button>
+              </form>
+            }
+
+            @if (authError) {
+              <p class="auth-feedback auth-feedback-error">{{ authError }}</p>
+            }
+
+            @if (authSuccess) {
+              <p class="auth-feedback auth-feedback-success">{{ authSuccess }}</p>
+            }
+
+            <div class="demo-box">
+              <div class="demo-header">
+                <strong>Contas de teste</strong>
+                <span>Use para validar o fluxo agora</span>
+              </div>
+
+              <div class="demo-list">
+                @for (account of demoAccounts; track account.email) {
+                  <article>
+                    <div>
+                      <p>{{ account.role }}</p>
+                      <span>{{ account.email }}</span>
+                      <span>Senha: {{ account.password }}</span>
+                    </div>
+                    <button
+                      class="secondary-btn"
+                      type="button"
+                      (click)="useDemoAccount(account.role === 'Administrador' ? 'admin' : 'user')"
+                    >
+                      Preencher
+                    </button>
+                  </article>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </aside>
+    </section>
+
+    <section class="categories" id="categorias">
+      <div class="section-heading">
+        <span class="section-kicker">Categorias quentes</span>
+        <h2>Produtos organizados para quem compra rapido.</h2>
+        <p>
+          Cards por jogo e tipo de item para facilitar navegacao, promocao e campanhas sazonais.
+        </p>
+      </div>
+
+      <div class="category-grid">
+        @for (category of featuredCategories; track category.name) {
+          <article class="category-card" [attr.data-tone]="category.tone">
+            <p class="category-game">{{ category.game }}</p>
+            <h3>{{ category.name }}</h3>
+            <p>{{ category.description }}</p>
+            <footer>
+              <span>{{ category.eta }}</span>
+              <a href="#ofertas">Explorar</a>
+            </footer>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="offers" id="ofertas">
+      <div class="section-heading">
+        <span class="section-kicker">Ofertas em destaque</span>
+        <h2>Itens prontos para girar caixa desde a primeira visita.</h2>
+        <p>
+          Bloco de produtos com preco, tempo de entrega e etiquetas para destacar urgencia e prova social.
+        </p>
+      </div>
+
+      <div class="offer-grid">
+        @for (deal of featuredDeals; track deal.name) {
+          <article class="offer-card">
+            <img class="offer-image" [src]="deal.imageUrl" [alt]="deal.name" loading="lazy">
+            <span class="offer-tag">{{ deal.tag }}</span>
+            <p class="offer-game">{{ deal.game }}</p>
+            <h3>{{ deal.name }}</h3>
+            <div class="offer-meta">
+              <strong>{{ deal.price | currency: 'BRL' : 'symbol' : '1.2-2' }}</strong>
+              <span>Entrega: {{ deal.delivery }}</span>
+            </div>
+            <a href="#inicio">Adicionar ao carrinho</a>
+          </article>
+        }
+      </div>
+    </section>
+
+    @if (canViewReports) {
+      <section class="reports" id="relatorios">
+        <div class="section-heading">
+          <span class="section-kicker">Relatorios</span>
+          <h2>Painel de vendas, procura e cadastro.</h2>
+          <p>
+            Este bloco mistura dados de demonstracao para operacao comercial com dados reais de cadastro
+            salvos localmente no navegador.
+          </p>
+        </div>
+
+        <div class="report-summary">
+          <article class="report-highlight">
+            <span class="report-label">Faturamento total</span>
+            <strong>{{ totalRevenue | currency: 'BRL' : 'symbol' : '1.2-2' }}</strong>
+            <p>{{ totalOrders }} pedidos somados no painel de vendas.</p>
+          </article>
+
+          <article class="report-highlight">
+            <span class="report-label">Maior procura</span>
+            <strong>{{ hottestDemand.term }}</strong>
+            <p>{{ hottestDemand.searches }} buscas no periodo, tendencia {{ hottestDemand.trend }}.</p>
+          </article>
+
+          <article class="report-highlight">
+            <span class="report-label">Cadastros ativos</span>
+            <strong>{{ accountMetrics.total }}</strong>
+            <p>Ultimo cadastro: {{ accountMetrics.latestAccountName }}.</p>
+          </article>
+        </div>
+
+        <div class="report-grid">
+          <article class="report-card">
+            <div class="report-card-head">
+              <div>
+                <span class="report-label">Vendas por jogo</span>
+                <h3>Receita e ticket medio</h3>
+              </div>
+              <span class="report-badge">Demo</span>
+            </div>
+
+            <div class="report-list">
+              @for (sale of salesReports; track sale.game) {
+                <div class="report-row">
+                  <div>
+                    <strong>{{ sale.game }}</strong>
+                    <span>{{ sale.orders }} pedidos</span>
+                  </div>
+                  <div class="report-values">
+                    <strong>{{ sale.revenue | currency: 'BRL' : 'symbol' : '1.2-2' }}</strong>
+                    <span>Ticket: {{ sale.averageTicket | currency: 'BRL' : 'symbol' : '1.2-2' }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </article>
+
+          <article class="report-card">
+            <div class="report-card-head">
+              <div>
+                <span class="report-label">Procura</span>
+                <h3>Termos mais buscados</h3>
+              </div>
+              <span class="report-badge">Demo</span>
+            </div>
+
+            <div class="report-list">
+              @for (demand of demandReports; track demand.term) {
+                <div class="report-row">
+                  <div>
+                    <strong>{{ demand.term }}</strong>
+                    <span>{{ demand.intent }}</span>
+                  </div>
+                  <div class="report-values">
+                    <strong>{{ demand.searches }}</strong>
+                    <span>{{ demand.trend }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </article>
+
+          <article class="report-card">
+            <div class="report-card-head">
+              <div>
+                <span class="report-label">Cadastros</span>
+                <h3>Contas no sistema</h3>
+              </div>
+              <span class="report-badge report-badge-live">Ao vivo</span>
+            </div>
+
+            <div class="report-list">
+              <div class="report-row">
+                <div>
+                  <strong>Total de contas</strong>
+                  <span>Usuarios salvos no navegador</span>
+                </div>
+                <div class="report-values">
+                  <strong>{{ accountMetrics.total }}</strong>
+                  <span>Registros</span>
+                </div>
+              </div>
+
+              <div class="report-row">
+                <div>
+                  <strong>Administradores</strong>
+                  <span>Perfis com acesso elevado</span>
+                </div>
+                <div class="report-values">
+                  <strong>{{ accountMetrics.admins }}</strong>
+                  <span>Contas</span>
+                </div>
+              </div>
+
+              <div class="report-row">
+                <div>
+                  <strong>Usuarios</strong>
+                  <span>Clientes e cadastros comuns</span>
+                </div>
+                <div class="report-values">
+                  <strong>{{ accountMetrics.users }}</strong>
+                  <span>Contas</span>
+                </div>
+              </div>
+
+              <div class="report-row">
+                <div>
+                  <strong>Cadastro mais recente</strong>
+                  <span>Ultima conta registrada</span>
+                </div>
+                <div class="report-values">
+                  <strong>{{ accountMetrics.latestAccountName }}</strong>
+                  <span>Nome</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    }
+
+    <section class="videos" id="videos">
+      <div class="section-heading">
+        <span class="section-kicker">Videos MMO</span>
+        <h2>Referencias aleatorias do YouTube para reforcar a tematica do site.</h2>
+        <p>
+          Uma vitrine com trailers e videos de MMOs conhecidos para dar mais contexto e atmosfera.
+        </p>
+      </div>
+
+      <div class="video-grid">
+        @for (video of mmoVideos; track video.watchUrl) {
+          <article class="video-card">
+            <div class="video-frame">
+              <iframe
+                [src]="video.embedUrl"
+                [title]="video.title"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+
+            <div class="video-copy">
+              <p class="video-game">{{ video.game }}</p>
+              <h3>{{ video.title }}</h3>
+              <p>{{ video.description }}</p>
+              <div class="video-meta">
+                <span>{{ video.channel }}</span>
+                <a [href]="video.watchUrl" target="_blank" rel="noopener">Assistir no YouTube</a>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="security" id="seguranca">
+      <div class="section-heading">
+        <span class="section-kicker">Fluxo de confianca</span>
+        <h2>Venda digital com menos atrito e mais seguranca.</h2>
+        <p>
+          A estrutura abaixo ajuda a explicar o processo ao cliente e reduz abandono no checkout.
+        </p>
+      </div>
+
+      <div class="security-grid">
+        @for (item of serviceHighlights; track item.step) {
+          <article class="security-card">
+            <span class="security-step">{{ item.step }}</span>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="cta-banner">
+      <div>
+        <span class="section-kicker">Pronto para escalar</span>
+        <h2>Base visual pronta para virar sua loja real em Angular.</h2>
+        <p>
+          O layout ja foi estruturado como landing page de conversao e agora tambem inclui cadastro, login e sessao local.
+        </p>
+      </div>
+
+      <a class="primary-btn" href="#acesso">Testar acesso</a>
+    </section>
+  </main>
+</div>

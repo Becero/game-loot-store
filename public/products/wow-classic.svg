@@ -1,0 +1,18 @@
+<svg width="640" height="360" viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="360" rx="24" fill="#111827"/>
+  <rect width="640" height="360" rx="24" fill="url(#paint0_linear)"/>
+  <circle cx="508" cy="94" r="96" fill="#FBBF24" fill-opacity="0.16"/>
+  <circle cx="130" cy="284" r="108" fill="#FDE68A" fill-opacity="0.12"/>
+  <path d="M84 240C164 196 242 170 316 166C394 162 472 138 556 82V286H84V240Z" fill="#0F172A" fill-opacity="0.56"/>
+  <text x="46" y="84" fill="#FEF3C7" font-family="Arial, sans-serif" font-size="22" font-weight="700">WORLD OF WARCRAFT</text>
+  <text x="46" y="126" fill="white" font-family="Arial, sans-serif" font-size="42" font-weight="700">Classic Carry</text>
+  <text x="46" y="164" fill="#FEF3C7" font-family="Arial, sans-serif" font-size="20">Runs heroicos com equipe dedicada</text>
+  <rect x="46" y="222" width="200" height="52" rx="16" fill="#FDE68A"/>
+  <text x="76" y="255" fill="#111827" font-family="Arial, sans-serif" font-size="22" font-weight="700">Top guild pronta</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="64" y1="40" x2="584" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C2D12"/>
+      <stop offset="1" stop-color="#B45309"/>
+    </linearGradient>
+  </defs>
+</svg>
